@@ -1,9 +1,7 @@
-{% extends 'authorization/base.html' %} 
-{% load static %} 
+{% extends 'dashboard/base.html' %} {% load static %}
 <!-- Content -->
 
-{% block title %} Doko - Register Account{% endblock %}
-{% block start %}
+{% block title %} Doko - Register Account{% endblock %} {% block start %}
 
 <div class="container-xxl">
   <div class="authentication-wrapper authentication-basic container-p-y">
@@ -93,18 +91,18 @@
               <span class="app-brand-text demo text-body fw-bolder">Doko</span>
             </a>
           </div>
+
           <!-- /Logo -->
           <h4 class="mb-2">Power of AI starts here 🚀</h4>
           <p class="mb-4">Make your content creation easy and fun!</p>
+          {% for message in messages %}
+          <div class="alert {{ message.tags }}" role="alert">
+            <p>{{message}}</p>
+          </div>
+          {% endfor %}
 
-          <form
-        
-            class="mb-3"
-            action="#"
-            method="POST"
-          >
-     
-     {% csrf_token %} 
+          <form class="mb-3" action="#" method="POST">
+            {% csrf_token %}
 
             <div class="mb-3">
               <label for="email" class="form-label">Email</label>
@@ -126,7 +124,6 @@
                   class="form-control"
                   name="password"
                   placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                  aria-describedby="password"
                   required
                 />
                 <span class="input-group-text cursor-pointer"
@@ -143,7 +140,6 @@
                   class="form-control"
                   name="confirm_password"
                   placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
-                  aria-describedby="password"
                   required
                 />
                 <span class="input-group-text cursor-pointer"
@@ -166,7 +162,9 @@
                 </label>
               </div>
             </div>
-            <button class="btn btn-primary d-grid w-100" type="submit">Sign up</button>
+            <button class="btn btn-primary d-grid w-100" type="submit">
+              Sign up
+            </button>
           </form>
 
           <p class="text-center">
