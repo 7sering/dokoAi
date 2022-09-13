@@ -10,7 +10,7 @@ from django.conf import settings # Import Settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('landing.urls')),
-    path('auth/', include('dashboard.urls'))
+    path('', include('dashboard.urls'))
 
 
 

@@ -2,9 +2,31 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
 
+# *Decorator for Auth
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import user_passes_test
+
 # Create your views here.
 
-#* Login
+
+def anonymous_required(function=None, redirect_url=None):
+    if not redirect_url:
+        redirect_url = 'dashboard'
+
+    actual_decorator = user_passes_test(
+
+        lambda u: u.is_anonymous,
+        login_url=redirect_url,
+    )
+
+    if function:
+        return actual_decorator(function)
+    return actual_decorator
+
+    
+
+# * Login
+@anonymous_required
 def login(request):
     if request.method == 'POST':
         email = request.POST['email'].replace(' ', '').lower()
@@ -20,7 +42,9 @@ def login(request):
 
     return render(request, 'dashboard/login.html')
 
-#* Register
+# Register
+
+@anonymous_required
 def register(request):
     if request.method == 'POST':
         email = request.POST['email'].replace(' ', '').lower()
@@ -43,6 +67,13 @@ def register(request):
 
     return render(request, 'dashboard/register.html')
 
+#? Logout Function
+@login_required
+def logout(request):
+    auth.logout(request)
+    return redirect('login')
 
+
+@login_required
 def dashboard(request):
     return render(request, 'dashboard/dashboard.html')
