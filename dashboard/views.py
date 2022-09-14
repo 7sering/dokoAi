@@ -3,7 +3,7 @@ from django.contrib.auth.models import User, auth
 from django.contrib import messages
 
 from .models import *
-from .forms import *
+from .forms import ProfileForm
 
 # *Decorator for Auth
 from django.contrib.auth.decorators import login_required
@@ -39,7 +39,7 @@ def login(request):
             auth.login(request, user)
             return redirect('dashboard')
         else:
-            messages.error(request, 'Invalid credentials please check again')
+            messages.error(request, 'Invalid credentials or User Not Existed')
             return redirect('login')
 
     return render(request, 'dashboard/login.html')
@@ -88,13 +88,14 @@ def dashboard(request):
 def profile(request):
     context = {}
 
-    if request.method == 'GET':
-        form = ProfileForm()
-        context['form'] = form
+    if request.method == "GET":
+        form = ProfileForm(instance=request.user.profile)
+        context["form"] = form
         return render(request, 'dashboard/profile.html', context)
 
-    if request.method == 'POST':
-        form = ProfileForm(request.POST)
+    if request.method == "POST":
+        form = ProfileForm(request.POST, instance=request.user.profile)
         if form.is_valid():
-            pass
+            form.save()
+            return redirect(profile)
     return render(request, 'dashboard/profile.html')
