@@ -28,6 +28,14 @@ LOGIN_URL = 'login'
 ALLOWED_HOSTS = []
 
 
+DJANGORESIZED_DEFAULT_SIZE = [1920, 1080]
+DJANGORESIZED_DEFAULT_SCALE = 0.5
+DJANGORESIZED_DEFAULT_QUALITY = 75
+DJANGORESIZED_DEFAULT_KEEP_META = True
+DJANGORESIZED_DEFAULT_FORCE_FORMAT = 'JPEG'
+DJANGORESIZED_DEFAULT_FORMAT_EXTENSIONS = {'JPEG': ".jpg"}
+DJANGORESIZED_DEFAULT_NORMALIZE_ROTATION = True
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -37,8 +45,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #Created Apps
     'dashboard',
     'landing',
+    #3rd Party Apps
+    'crispy_forms',
+  
 ]
 
 MIDDLEWARE = [

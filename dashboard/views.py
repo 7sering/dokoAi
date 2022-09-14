@@ -2,6 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
 
+from .models import *
+from .forms import *
+
 # *Decorator for Auth
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import user_passes_test
@@ -23,7 +26,6 @@ def anonymous_required(function=None, redirect_url=None):
         return actual_decorator(function)
     return actual_decorator
 
-    
 
 # * Login
 @anonymous_required
@@ -43,6 +45,7 @@ def login(request):
     return render(request, 'dashboard/login.html')
 
 # Register
+
 
 @anonymous_required
 def register(request):
@@ -67,7 +70,9 @@ def register(request):
 
     return render(request, 'dashboard/register.html')
 
-#? Logout Function
+# ? Logout Function
+
+
 @login_required
 def logout(request):
     auth.logout(request)
@@ -78,6 +83,18 @@ def logout(request):
 def dashboard(request):
     return render(request, 'dashboard/dashboard.html')
 
+
 @login_required
 def profile(request):
+    context = {}
+
+    if request.method == 'GET':
+        form = ProfileForm()
+        context['form'] = form
+        return render(request, 'dashboard/profile.html', context)
+
+    if request.method == 'POST':
+        form = ProfileForm(request.POST)
+        if form.is_valid():
+            pass
     return render(request, 'dashboard/profile.html')
