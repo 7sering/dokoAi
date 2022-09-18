@@ -1,5 +1,6 @@
 # from django.contrib import messages
 from django.contrib.messages import constants as messages
+from decouple import config
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -13,17 +14,21 @@ MESSAGE_TAGS = {
 }
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
-
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-cp54g%%17j+no6_&*nyvk(qq2mgg(i!%6e2zkj_7_w0908zlx)'
+SECRET_KEY = config('SECRET_KEY')
+
+# OPEN AI KEY
+OPENAI_API_KEY = config('OPENAI_API_KEY')
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config('DEBUG', default=True, cast=bool)
 
 LOGIN_REDIRECT_URL = 'dashboard'
 LOGIN_URL = 'login'
+
+
+
 
 ALLOWED_HOSTS = []
 
