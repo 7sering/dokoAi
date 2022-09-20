@@ -108,3 +108,11 @@ def profile(request):
             return redirect('profile')
             
     return render(request, 'dashboard/profile.html')
+
+
+
+
+
+
+def blogTopic(request):
+    return render(request, 'dashboard/blogTopic.html')
