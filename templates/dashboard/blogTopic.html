@@ -1,23 +1,50 @@
-
 {% extends 'dashboard/base.html'%} {% load static %}
 <!-- Content -->
-{% block title %}Doko - Dashboard{% endblock %} 
-{% block start %}
+{% block title %}Doko - Dashboard{% endblock %} {% block start %}
 
-            <!-- Content -->
+<!-- Content -->
 
-            <div class="container-fluid flex-grow-1 container-p-y">
-              <!-- Layout Demo -->
-              <div class="layout-demo-wrapper">
-                <div class="layout-demo-info">
-                  <h4>Blog Topic Generetor</h4>
-                  <p>Hello Blog Topic</p>
-                </div>
-              </div>
-              <!--/ Layout Demo -->
-            </div>
-            <!-- / Content -->
+<div class="container-fluid flex-grow-1 container-p-y">
+  <!-- Layout Demo -->
+  <div class="layout-demo-wrapper">
+    <div class="row">
+      <div class="col-md-12">
+        <h2 class="m-2">Enter your blog topic idea below</h2>
+        <form class="mb-3" method="POST">
+          {% csrf_token %}
 
-          
+          <div class="mb-3">
+            <label for="blogIdea" class="form-label">Blog Idea</label>
+            <input
+              type="text"
+              class="form-control"
+              name="blogIdea"
+              placeholder="Enter your blog topic.."
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="keywords" class="form-label">Keywords</label>
+            <input
+              type="field"
+              class="form-control"
+              name="keywords"
+              placeholder="Enter your keyword.."
+              required
+            />
+          </div>
+
+          <div class="mb-3">
+            <button class="btn btn-primary d-grid w-100" type="submit">
+              Generate Blog Idea
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!--/ Layout Demo -->
+</div>
+<!-- / Content -->
 
 {% endblock %}
