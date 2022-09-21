@@ -9,6 +9,8 @@ openai.api_key = settings.OPENAI_API_KEY
 # blog_topics = []
 
 def generateBlogTopicIdea(topic, keywords):
+    blog_topics = []
+
     response = openai.Completion.create(
         model="text-davinci-002",
         prompt="Generate Blog Topic Ideas : {}\nKeywords: {}\n".format(topic, keywords),
@@ -23,10 +25,17 @@ def generateBlogTopicIdea(topic, keywords):
         if len(response['choices'])>0:
             res = response['choices'][0]['text']
         else:
-            res = None
+            return []
     else:
-        res = None
-    return res
+        return []
+
+    a_list = res.split('*')
+    if len(a_list) > 0:
+        for blog in a_list:
+            blog_topics.append(blog)
+    else:
+        return []
+    return blog_topics
 
 
 def generateBlogSectionHeadings(topic, keywords):
@@ -51,17 +60,3 @@ def generateBlogSectionHeadings(topic, keywords):
 
 
 
-
-
-
-
-
-# topic = 'How to create blog with ai tools'
-# keywords = 'Create Blog with AI tools, AI tools for blogs, best AI tools'
-
-# res = generateBlogTopicIdea(topic, keywords).replace('\n', '')
-# b_list = res.split('*')
-# for blog in b_list:
-#     blog_topics.append(blog)
-#     print('\n')
-#     print(blog)

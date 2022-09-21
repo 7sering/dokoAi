@@ -1,0 +1,31 @@
+
+{% extends 'dashboard/base.html'%} {% load static %}
+<!-- Content -->
+{% block title %}Doko - Dashboard{% endblock %} 
+{% block start %}
+
+            <!-- Content -->
+
+            <div class="container-fluid flex-grow-1 container-p-y">
+              <!-- Layout Demo -->
+              <div class="layout-demo-wrapper">
+    
+                </div>
+                <div class="layout-demo-info">
+                  <h4>💃💃💃 We Have Generated These Possible Blog Ides For You</h4>
+
+                  {% for blog in blogTopics %}
+                  <p>{{blog}}</p>
+                  <br>
+                  {% endfor %}
+
+
+                </div>
+              </div>
+              <!--/ Layout Demo -->
+            </div>
+            <!-- / Content -->
+
+          
+
+{% endblock %}

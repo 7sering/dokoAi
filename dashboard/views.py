@@ -4,6 +4,7 @@ from django.contrib import messages
 
 from .models import *
 from .forms import *
+from .functions import *
 
 # *Decorator for Auth
 from django.contrib.auth.decorators import login_required
@@ -115,4 +116,30 @@ def profile(request):
 
 
 def blogTopic(request):
-    return render(request, 'dashboard/blogTopic.html')
+    context = {}
+    if request.method == 'POST':
+        blogIdea = request.POST['blogIdea']
+        keywords = request.POST['keywords']
+
+        blogTopics = generateBlogTopicIdea(blogIdea, keywords)
+        if len(blogTopics) > 0:
+            request.session['blogTopics'] = blogTopics
+            return redirect('blog-section')
+        else:
+            messages.error(request, 'Sorry Unable to generate blog ideas please try again')
+            return redirect('blogTopic')
+
+    return render(request, 'dashboard/blogTopic.html', context)
+
+
+def blogSection(request):
+    if 'blogTopics' in request.session:
+        pass
+    else:
+        messages.error(request, 'Start by creating blog topic ideas')
+        return redirect('blogTopic')
+
+    context = {}
+    context['blogTopics'] = request.session['blogTopics']
+
+    return render(request, 'dashboard/blog-section.html', context)
